@@ -20,11 +20,6 @@ variable "cloudrun_name" {
   description = "Name of the cloud run service"
 }
 
-variable "region" {
-  type        = string
-  description = "Region of the cloud run service"
-}
-
 variable "image_uri" {
   type        = string
   description = "URL of the container image in Google Artifact Registry or Google Container Registry"
