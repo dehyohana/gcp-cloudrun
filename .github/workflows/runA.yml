@@ -21,7 +21,7 @@ jobs:
         uses: dehyohana/gcp-cloudrun/.github/workflows/docker-push-template.yml@feature/pipeline
         with:
             working_directory: 'microserviceA'
-            image_name: 'helloworld-A'
+            image_name: 'helloworld-a'
             dockerfile: 'Dockerfile'
             registry_container: 'terraform-container'
         secrets:
