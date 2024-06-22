@@ -1,13 +1,21 @@
+# Use the official Python image from the Docker Hub
 FROM python:3.9-slim
 
+# Set working directory within the container
 WORKDIR /app
 
-COPY . /app
+# Copy the current directory contents into the container at /app
+COPY . .
 
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-EXPOSE 80
+# Expose the port that Flask runs on
+EXPOSE 8080
 
-ENV PORT 80
+# Define environment variables
+ENV PORT 8080
+ENV NAME World
 
-CMD ["python", "app.py"]
+# Command to run the Flask application
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "app:app"]
