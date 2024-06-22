@@ -1,0 +1,29 @@
+name: Run Microservice A
+run-name: Run A - ${{ github.run_id }}
+
+on:
+    push:
+        branches:
+            - feature/pipeline
+        # paths:
+        #     - 'microserviceA/**'
+    workflow_dispatch:
+        inputs:
+            environment:
+                description: "Environment to run deploy (dev, stg, prd)"
+                type: environment
+                required: true
+                default: "dev"
+
+jobs:
+    docker-push:
+        name: Use Docker build and push template for microservice A
+        uses: dehyohana/gcp-cloudrun/.github/workflows/docker-push-template.yml@feature/pipeline
+        with:
+            working_directory: 'microserviceA'
+            image_name: 'helloworld-a'
+            dockerfile: 'Dockerfile'
+            registry_container: 'terraform-repository'
+            # GCP_PROJECT_ID: ${{ vars.PROJECT }}
+        secrets:
+            GCP_SA_KEY: ${{ secrets.CREDENTIALS}}
