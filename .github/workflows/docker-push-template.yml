@@ -19,10 +19,6 @@ on:
         description: 'a'
         type: string
         default: 'dev'
-      # GCP_PROJECT_ID:
-      #   description: 'a'
-      #   type: string
-      #   required: true
     secrets:
       GCP_SA_KEY:
         required: true
