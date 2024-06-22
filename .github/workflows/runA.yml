@@ -16,7 +16,7 @@ jobs:
             working_directory: 'microserviceA'
             image_name: 'helloworld-A'
             dockerfile: 'Dockerfile'
-            container-name: 'terraform-container'
+            registry_container: 'terraform-container'
         secrets:
             GCP_SA_KEY: ${{ secrets.CREDENTIALS}}
             GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
