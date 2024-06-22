@@ -19,10 +19,10 @@ on:
         description: 'a'
         type: string
         default: 'dev'
-      GCP_PROJECT_ID:
-        description: 'a'
-        type: string
-        required: true
+      # GCP_PROJECT_ID:
+      #   description: 'a'
+      #   type: string
+      #   required: true
     secrets:
       GCP_SA_KEY:
         required: true
@@ -56,11 +56,11 @@ jobs:
       - name: Build image
         working-directory: ${{ inputs.working_directory}}
         run: |
-          echo ${{ inputs.GCP_PROJECT_ID }}
+          echo ${{ env.GCP_PROJECT }}
           docker buildx build -f ${{ inputs.dockerfile }} -t ${{ inputs.image_name }} .
-          docker tag ${{ inputs.image_name}} us-central1-docker.pkg.dev/${{ inputs.GCP_PROJECT_ID }}/${{ inputs.registry_container}}/${{ inputs.image_name}}:latest
+          docker tag ${{ inputs.image_name}} us-central1-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ inputs.registry_container}}/${{ inputs.image_name}}:latest
 
       - name: Push image
         run: |
-          docker push us-central1-docker.pkg.dev/${{ inputs.GCP_PROJECT_ID }}/${{ inputs.registry_container}}/${{ inputs.image_name}}:latest
+          docker push us-central1-docker.pkg.dev/${{ env.GCP_PROJECT }}/${{ inputs.registry_container}}/${{ inputs.image_name}}:latest
 

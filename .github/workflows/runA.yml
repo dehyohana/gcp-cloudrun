@@ -24,6 +24,6 @@ jobs:
             image_name: 'helloworld-a'
             dockerfile: 'Dockerfile'
             registry_container: 'terraform-container'
-            GCP_PROJECT_ID: ${{ vars.PROJECT }}
+            # GCP_PROJECT_ID: ${{ vars.PROJECT }}
         secrets:
             GCP_SA_KEY: ${{ secrets.CREDENTIALS}}
