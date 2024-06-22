@@ -56,6 +56,7 @@ jobs:
       - name: Build image
         working-directory: ${{ inputs.working_directory}}
         run: |
+          echo ${{ inputs.GCP_PROJECT_ID }}
           docker buildx build -f ${{ inputs.dockerfile }} -t ${{ inputs.image_name }} .
           docker tag ${{ inputs.image_name}} us-central1-docker.pkg.dev/${{ inputs.GCP_PROJECT_ID }}/${{ inputs.registry_container}}/${{ inputs.image_name}}:latest
 
