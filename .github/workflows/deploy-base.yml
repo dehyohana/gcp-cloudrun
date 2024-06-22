@@ -1,0 +1,75 @@
+name: Terraform Infrastructure Apply
+
+on: 
+  push:
+    branches:
+    - main
+    paths:
+      - 'gcp/modules/artifactRegistry/**'
+      - 'gcp/base/**'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to run deploy (dev, stg, prd)"
+        type: environment
+        required: true
+        default: "dev"
+
+jobs:
+  infra:
+    name: Infra Plan
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment || 'dev' }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Modify backend.tf
+        run: |
+          sed -i 's/terraform-gcp-workflow/terraform-gcp-workflow-${{ inputs.environment || 'dev' }}/g' backend.tf
+        working-directory: gcp/base
+      
+      - name: Show changes
+        run: git diff
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.0-beta2
+          terraform_wrapper: false
+          working-directory: gcp/base
+
+      - name: Terraform Version
+        run: terraform --version
+
+      - name: Export Google Cloud credentials
+        run: echo "$GCP_SA_KEY" > gcp/base/credentials.json
+        env:
+          GCP_SA_KEY: ${{ secrets.CREDENTIALS }}
+      
+      - name: Terraform Init
+        id: Init
+        run: |
+          terraform init
+        working-directory: gcp/base
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ./credentials.json
+
+      - name: Terraform Plan
+        id: plan
+        run: |
+          terraform plan -out tf.plan \
+          -var="credentials=./credentials.json" \
+          -var="region=${{vars.REGION}}" \
+          -var="project=${{vars.PROJECT}}" \
+          -var="repository_id=${{vars.REPOSITORY_ID}}" 
+        working-directory: gcp/base
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ./credentials.json
+
+      - name: Terraform Apply
+        id: apply
+        run: |
+          terraform apply tf.plan
+        working-directory: gcp/base
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ./credentials.json
