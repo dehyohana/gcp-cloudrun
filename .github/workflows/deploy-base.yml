@@ -25,7 +25,7 @@ jobs:
 
       - name: Modify backend.tf
         run: |
-          sed -i 's/terraform-gcp-workflow/terraform-gcp-workflow-${{ inputs.environment || 'dev' }}/g' backend.tf
+          sed -i 's/tterraform-gcp-container/terraform-gcp-container-${{ inputs.environment || 'dev' }}/g' backend.tf
         working-directory: gcp/base
       
       - name: Show changes

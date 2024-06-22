@@ -1,0 +1,22 @@
+name: Run Microservice A
+run-name: Run A - ${{ github.run_id }}
+
+on:
+    push:
+        branches:
+            - feature/pipeline
+        paths:
+            - 'microserviceA/**'
+
+jobs:
+    docker-push:
+        name: Use Docker build and push template for microservice A
+        uses: dehyohana/gcp-cloudrun/.github/workflows/docker-push-template.yml@feature/pipeline
+        with:
+            working-directory: 'microserviceA'
+            image-name: 'helloworld-A'
+            dockerfile: 'Dockerfile'
+            container-name: 'terraform-container'
+        secrets:
+            GCP_SA_KEY: ${{ secrets.CREDENTIALS}}
+            GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
