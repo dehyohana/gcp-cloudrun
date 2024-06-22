@@ -15,6 +15,10 @@ on:
       registry_container:
         description: 'a'
         type: string
+      environment:
+        description: 'a'
+        type: string
+        default: 'dev'
     secrets:
       GCP_SA_KEY:
         required: true
