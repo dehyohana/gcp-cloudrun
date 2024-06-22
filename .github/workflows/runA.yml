@@ -26,4 +26,4 @@ jobs:
             registry_container: 'terraform-container'
         secrets:
             GCP_SA_KEY: ${{ secrets.CREDENTIALS}}
-            GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+            GCP_PROJECT_ID: ${{ vars.PROJECT }}
