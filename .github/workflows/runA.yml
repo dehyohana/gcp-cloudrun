@@ -13,8 +13,8 @@ jobs:
         name: Use Docker build and push template for microservice A
         uses: dehyohana/gcp-cloudrun/.github/workflows/docker-push-template.yml@feature/pipeline
         with:
-            working-directory: 'microserviceA'
-            image-name: 'helloworld-A'
+            working_directory: 'microserviceA'
+            image_name: 'helloworld-A'
             dockerfile: 'Dockerfile'
             container-name: 'terraform-container'
         secrets:
