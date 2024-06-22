@@ -7,6 +7,13 @@ on:
             - feature/pipeline
         paths:
             - 'microserviceA/**'
+    workflow_dispatch:
+        inputs:
+            environment:
+                description: "Environment to run deploy (dev, stg, prd)"
+                type: environment
+                required: true
+                default: "dev"
 
 jobs:
     docker-push:
