@@ -4,5 +4,5 @@ module "cloud_run" {
   cloudrun_name = var.cloudrun_name
   region        = var.region
   image_uri     = var.image_uri
-  ingress       = "ALLOW_TRAFFIC_ALL"
+  ingress       = "INGRESS_TRAFFIC_ALL"
 }
